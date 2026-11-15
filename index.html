@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iron Wave — сталеві ламельні жалюзі | Hobbit House</title>
+<meta name="description" content="Iron Wave — сталеві ламельні жалюзі. Закриваються зсередини однією ручкою: одна тяга повертає всі ламелі разом. Hobbit House.">
+<meta name="robots" content="noindex,nofollow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Iron Wave — сталеві ламельні жалюзі | Hobbit House">
+<meta property="og:description" content="Iron Wave — сталеві ламельні жалюзі. Закриваються зсередини однією ручкою: одна тяга повертає всі ламелі разом. Hobbit House.">
+<meta property="og:image" content="assets/video/poster.jpg">
+<link rel="icon" href="assets/img/iron-wave-mark-closed.svg" type="image/svg+xml">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","name":"Hobbit House"},{"@context":"https://schema.org","@type":"Product","name":"Iron Wave","description":"Iron Wave — сталеві ламельні жалюзі. Закриваються зсередини однією ручкою: одна тяга повертає всі ламелі разом. Hobbit House.","brand":{"@type":"Brand","name":"Hobbit House"}},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Як закрити жалюзі?","acceptedAnswer":{"@type":"Answer","text":"Зсередини приміщення, однією ручкою. Поворот ручки зсуває тягу — і всі 26 ламелей повертаються разом."}},{"@type":"Question","name":"З чого зроблена конструкція?","acceptedAnswer":{"@type":"Answer","text":"Уся конструкція — сталь: рама, імпост, ламелі, тяга й ручка."}}]}]</script>
+<style>
+@font-face{font-family:"Akt";src:url("assets/fonts/Akt.ttf") format("truetype");font-weight:100 900;font-display:swap}
+:root{
+  --black:#000000;--ink:#0b0c0d;--ink2:#161819;--line:#2a2e30;
+  --steel:#84969A;--steel-l:#C9D2D4;--paper:#f5f5f2;--paper2:#ebeae5;
+  --yellow:#FCDE00;--green:#2F7D4F;--red:#D8332A;
+  --text:#f2f4f4;--muted:#8e999c;--pad:clamp(20px,5vw,64px);
+}
+</style>
+<link rel="stylesheet" href="site.css">
+
+</head>
+<body>
+
+<div class="bar">
+  <a class="logo" href="#story" aria-label="Iron Wave"><img src="assets/img/iron-wave-compact.svg" alt="Iron Wave"></a>
+  <nav><a href="#story" data-k="nav.overview">Огляд</a><a href="#levels" data-k="nav.levels">Сценарій</a><a href="#film" data-k="nav.film">Ролик</a></nav>
+  <a class="buy" href="#contact" data-k="nav.cta" data-track="cta-top">Зв&#39;язатися</a>
+</div>
+
+<section id="story" aria-label="Iron Wave — огляд">
+  <div class="pin">
+    <canvas id="seq" aria-label="Модуль Iron Wave: закривання, механізм і деталі"></canvas>
+    <div class="chap" data-in="0" data-out=".1"><img class="wm" src="assets/img/iron-wave-lockup-clear.svg" alt="Iron Wave — Сталеві ламельні жалюзі, Hobbit House" style="width:min(460px,78vw)"></div>
+    <div class="chap" data-in=".13" data-out=".24"><h2 data-k="story.ch1">Відкриті — світло.</h2></div>
+    <div class="chap" data-in=".27" data-out=".38"><h2 class="grad" data-k="story.ch2">Закриті — сталь.</h2></div>
+    <div class="chap bottom" data-in=".42" data-out=".6"><h2 data-k="story.ch3">Одна ручка.<br>Одна тяга.</h2><p data-k="story.ch3p">Поворот ручки зсуває тягу — і всі 26 ламелей повертаються разом.</p></div>
+    <div class="chap" data-in=".64" data-out=".8"><h2 data-k="story.ch4">Уся конструкція — сталь.</h2><p data-k="story.ch4p">Рама, імпост, ламелі, тяга й ручка.</p></div>
+    <div class="chap" data-in=".86" data-out="1.01"><h2 data-k="story.ch5">Закривається зсередини.</h2><p data-k="story.ch5p">Не виходячи на вулицю.</p></div>
+
+    <div class="lab" data-a="lever" data-in=".44" data-out=".6"><b data-k="lab.lever">Ручка-вилка</b> <span data-k="lab.lever_s">одна на модуль</span></div>
+    <div class="lab" data-a="bar"   data-in=".46" data-out=".6"><b data-k="lab.bar">Тяга</b> <span data-k="lab.bar_s">лише вгору-вниз</span></div>
+    <div class="lab" data-a="slat"  data-in=".48" data-out=".6"><b data-k="lab.slat">Ламель</b> <span data-k="lab.slat_s">рівний лист</span></div>
+    <div class="lab" data-a="frame" data-in=".68" data-out=".8"><b data-k="lab.frame">Рама</b> <span data-k="lab.frame_s">кути на вус 45°</span></div>
+    <div class="lab" data-a="slat"  data-in=".69" data-out=".8"><b data-k="lab.slats26">26 ламелей</b></div>
+    <div class="lab" data-a="bar"   data-in=".70" data-out=".8"><b>Тяга</b></div>
+    <div class="lab" data-a="lever" data-in=".71" data-out=".8"><b>Ручка-вилка</b></div>
+    <div class="scrollcue" id="cue" data-k="story.cue">Гортайте</div>
+  </div>
+</section>
+
+
+<section id="levels" class="sec light" style="background:var(--paper2)">
+  <div class="wrap">
+    <p class="eyebrow rv" data-k="levels.eyebrow">Сценарій</p>
+    <h2 class="h-sec rv" data-k="levels.title">Чотири рівні. Одна ручка.</h2>
+    <div class="gal rv"><article class="card" style="--c:var(--green)"><b data-c="levels:1:name">Зелений</b><h3 data-c="levels:1:title">Працюємо</h3><p data-c="levels:1:text">Жалюзі відкриті: денне світло й огляд вулиці.</p><img src="assets/img/iron-wave-mark-open.svg" alt=""></article><article class="card" style="--c:var(--yellow)"><b data-c="levels:2:name">Жовтий</b><h3 data-c="levels:2:title">Закриваємо</h3><p data-c="levels:2:text">Ламелі закривають зсередини, не виходячи назовні.</p><img src="assets/img/iron-wave-mark-closed.svg" alt=""></article><article class="card" style="--c:var(--red)"><b data-c="levels:3:name">Червоний</b><h3 data-c="levels:3:title">В укриття</h3><p data-c="levels:3:text">Вікна закриті, люди переходять в укриття.</p><img src="assets/img/iron-wave-mark-closed.svg" alt=""></article><article class="card" style="--c:var(--steel)"><b data-c="levels:4:name">Відбій</b><h3 data-c="levels:4:title">Відкриваємо</h3><p data-c="levels:4:text">Ручку повертають назад — ламелі відкриваються.</p><img src="assets/img/iron-wave-mark-open.svg" alt=""></article></div>
+  </div>
+</section>
+
+<section id="film" class="sec film">
+  <div class="wrap">
+    <p class="eyebrow rv" data-k="film.eyebrow">Ролик</p>
+    <h2 class="h-sec rv" data-k="film.title">Iron Wave у русі.</h2>
+    <div class="vid rv"><video controls preload="none" playsinline poster="assets/video/poster.jpg"><source src="assets/video/iron_wave_720p.mp4" type="video/mp4"></video></div>
+    <p class="note" data-k="film.note">Презентаційний ролик. Сцени загрози й вибуху — комп&#39;ютерна симуляція, а не результат випробувань.</p>
+  </div>
+</section>
+
+<section id="faq" class="sec light">
+  <div class="wrap">
+    <p class="eyebrow rv" data-k="faq.eyebrow">Питання</p>
+    <h2 class="h-sec rv" data-k="faq.title">Коротко про головне.</h2>
+    <div class="faq"><details class="rv"><summary><span data-c="faq:5:q">Як закрити жалюзі?</span></summary><p data-c="faq:5:a">Зсередини приміщення, однією ручкою. Поворот ручки зсуває тягу — і всі 26 ламелей повертаються разом.</p></details><details class="rv"><summary><span data-c="faq:6:q">З чого зроблена конструкція?</span></summary><p data-c="faq:6:a">Уся конструкція — сталь: рама, імпост, ламелі, тяга й ручка.</p></details></div>
+  </div>
+</section>
+
+<section id="contact" class="end">
+  <div class="wrap">
+    <p class="mantra rv"><span data-k="end.mantra1">Ваша безпека —</span><br><span class="grad" data-k="end.mantra2">це наша робота.</span></p>
+    <p class="rv" data-k="end.lead">Розкажіть, які вікна потрібно закрити.</p>
+    <form class="lead rv" id="leadForm" autocomplete="on">
+      <input name="name" placeholder="Ім&#39;я" maxlength="80">
+      <input name="phone" placeholder="Телефон" required inputmode="tel" maxlength="30">
+      <textarea name="message" placeholder="Які вікна і скільки" rows="2" maxlength="1000"></textarea>
+      <input name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+      <button type="submit" data-k="form.send">Надіслати</button>
+      <small data-k="form.consent">Надсилаючи форму, ви погоджуєтесь на обробку контактних даних для відповіді на звернення.</small>
+      <p class="ok" hidden data-k="form.ok">Дякуємо. Менеджер зв&#39;яжеться з вами.</p>
+    </form>
+    <a class="link" href="#story" data-k="end.again">Ще раз огляд ›</a>
+    
+  </div>
+</section>
+
+<footer><div class="wrap"><img src="assets/img/hobbit-house-on-dark.svg" alt="Hobbit House"><small data-k="footer.copy">Iron Wave — сталеві ламельні жалюзі · © 2026 Hobbit House</small></div></footer>
+
+<script>window.IW={"edit": false, "widgets": {"chat_on": true, "chat_title": "Iron Wave", "chat_greeting": "Вітаємо! Розкажіть, які вікна потрібно закрити, — підкажемо.", "callback_on": true, "cookie_on": true, "exit_on": false, "exit_text": "Залиште телефон — менеджер передзвонить і відповість на питання."}, "t": {"form.name": "Ім'я", "form.phone": "Телефон", "form.msg": "Які вікна і скільки", "form.send": "Надіслати", "form.ok": "Дякуємо. Менеджер зв'яжеться з вами.", "form.consent": "Надсилаючи форму, ви погоджуєтесь на обробку контактних даних для відповіді на звернення.", "w.callback": "Передзвоніть мені", "w.cookie": "Ми рахуємо відвідування, щоб покращувати сайт. Без реклами і без передачі третім особам.", "w.cookie_ok": "Добре", "w.chat_ph": "Напишіть повідомлення"}, "demo": true};</script>
+<script src="site.js" defer></script>
+</body>
+</html>
