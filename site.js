@@ -6,6 +6,65 @@ const $ = (s, r = document) => r.querySelector(s);
 const post = (u, d) => fetch(u, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) }).then(r => r.json());
 const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
 
+
+/* ---------- заставка: тягнеш ручку → ламелі відкриваються → проліт крізь щілину в сайт ---------- */
+(function intro() {
+  const box = $('#intro'); if (!box || IW.edit) return;
+  let seen = null; try { seen = sessionStorage.getItem('iw_intro'); } catch {}
+  if (seen && !/[?&]intro\b/.test(location.search)) return;
+  box.hidden = false; document.documentElement.classList.add('intro-on');
+  const cv = $('#introCv'), cx = cv.getContext('2d'), lever = $('#lever'), knob = $('.lever-knob', lever), fill = $('.lever-fill', lever);
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const CLOSED = 57, OPEN = 36, IW_ = 1600, IH_ = 900;               // кадри рендера: вид спереду, закрито → відкрито
+  const MOD = { cx: .5 * IW_, cy: .567 * IH_, w: .2568 * IW_, h: .609 * IH_ }, GAP = { x: .4132 * IW_, y: .5394 * IH_ };
+  const frames = {}; for (let f = OPEN; f <= CLOSED; f++) { const im = new Image(); im.src = `assets/seq/l_${String(f).padStart(4, '0')}.jpg`; im.onload = draw; frames[f] = im; }
+  let p = 0, z = 0, W = 0, H = 0, dpr = 1, done = false;
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  function size() { dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; draw(); }
+  function draw() {
+    if (!W) return;
+    const f = Math.round(CLOSED - p * (CLOSED - OPEN)); let im = frames[f];
+    for (let d = 1; !(im && im.complete && im.naturalWidth) && d < 22; d++) im = frames[f + d] || frames[f - d];
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.fillStyle = '#020202'; cx.fillRect(0, 0, W, H);
+    if (!(im && im.complete && im.naturalWidth)) return;
+    const s0 = Math.min(H * .5 / MOD.h, W * .66 / MOD.w), k = ease(z), s = s0 * (1 + Math.pow(z, 2.4) * 46);
+    const fx = MOD.cx + (GAP.x - MOD.cx) * k, fy = MOD.cy + (GAP.y - MOD.cy) * k;      // точка, на яку «летимо»
+    const sx = W / 2, sy = H * (.6 - .1 * k);
+    cx.drawImage(im, sx - fx * s, sy - fy * s, IW_ * s, IH_ * s);
+    if (z > .55) { cx.fillStyle = `rgba(255,240,214,${Math.min(1, (z - .55) / .4)})`; cx.fillRect(0, 0, W, H); }   // світло з-за ламелей
+  }
+  function setP(v) {
+    p = Math.max(0, Math.min(1, v)); const h = lever.clientHeight;
+    knob.style.top = (p * (h - 60)) + 'px'; fill.style.height = (p * (h - 60)) + 'px';
+    lever.setAttribute('aria-valuenow', Math.round(p * 100)); draw();
+    if (p >= 1 && !done) go();
+  }
+  function tween(from, to, ms, fn, then) { const t0 = performance.now(); (function st(t) { const k = Math.min(1, (t - t0) / ms); fn(from + (to - from) * ease(k)); if (k < 1) requestAnimationFrame(st); else then && then(); })(t0); }
+  function finish() {
+    box.style.transition = 'opacity .45s ease'; box.style.opacity = '0';
+    setTimeout(() => { box.hidden = true; document.documentElement.classList.remove('intro-on'); try { sessionStorage.setItem('iw_intro', '1'); } catch {} dispatchEvent(new Event('resize')); }, 460);
+  }
+  function go() {
+    if (done) return; done = true; box.classList.add('go');
+    if (RM) return finish();
+    tween(0, 1, 1500, v => { z = v; draw(); }, finish);
+  }
+  // ручка: тягнути вниз (миша, палець), клавіші, колесо
+  let drag = null;
+  lever.addEventListener('pointerdown', e => { if (done) return; drag = { y: e.clientY, p }; lever.classList.add('drag'); lever.setPointerCapture(e.pointerId); e.preventDefault(); });
+  lever.addEventListener('pointermove', e => { if (drag) setP(drag.p + (e.clientY - drag.y) / (lever.clientHeight - 60)); });
+  const release = () => { if (!drag) return; drag = null; lever.classList.remove('drag'); if (!done) tween(p, p > .45 ? 1 : 0, 450, setP); };
+  lever.addEventListener('pointerup', release); lever.addEventListener('pointercancel', release);
+  lever.addEventListener('keydown', e => { if (['ArrowDown', 'PageDown'].includes(e.key)) { setP(p + .1); e.preventDefault(); } if (['ArrowUp', 'PageUp'].includes(e.key)) { setP(p - .1); e.preventDefault(); } if (e.key === 'Enter' || e.key === ' ') { tween(p, 1, 700, setP); e.preventDefault(); } });
+  box.addEventListener('wheel', e => { if (!done) { setP(p + e.deltaY / 900); e.preventDefault(); } }, { passive: false });
+  let ty = null; box.addEventListener('touchstart', e => { if (!e.target.closest('.lever,button')) ty = e.touches[0].clientY; }, { passive: true });
+  box.addEventListener('touchmove', e => { if (ty != null && !done) { setP(p + (ty - e.touches[0].clientY) / 500); ty = e.touches[0].clientY; } }, { passive: true });
+  $('.intro-open', box).onclick = () => tween(p, 1, 900, setP);
+  $('.intro-skip', box).onclick = () => { done = true; finish(); };
+  addEventListener('resize', () => { if (!box.hidden) { size(); setP(p); } });
+  size(); setP(0); lever.focus({ preventScroll: true });
+})();
+
 /* ---------- історія: кадри за прогресом гортання ---------- */
 const N = 161, SRC = i => `assets/seq/l_${String(i).padStart(4, '0')}.jpg`;
 const story = $('#story'), cv = $('#seq'), cx = cv.getContext('2d');

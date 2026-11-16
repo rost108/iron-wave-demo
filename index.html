@@ -27,9 +27,22 @@
 </head>
 <body>
 
+<div id="intro" class="intro" role="dialog" aria-label="Заставка: потягніть ручку, щоб відкрити сайт" hidden>
+  <canvas id="introCv" aria-hidden="true"></canvas>
+  <div class="intro-glow" aria-hidden="true"></div>
+  <div class="intro-ui">
+    <img class="intro-logo" src="assets/img/iron-wave-lockup-clear.svg" alt="Iron Wave">
+    <h1 class="intro-title" data-k="intro.title">Потягніть ручку.</h1>
+  </div>
+  <div class="lever" id="lever" role="slider" tabindex="0" aria-label="Ведіть ручку вниз — ламелі відкриються" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <span class="lever-track"></span><span class="lever-fill"></span><span class="lever-knob"><i></i></span>
+  </div>
+  <p class="intro-hint" data-k="intro.hint">Ведіть ручку вниз — ламелі відкриються</p>
+  <div class="intro-actions"><button type="button" class="intro-open" data-k="intro.open">Відкрити</button><button type="button" class="intro-skip" data-k="intro.skip">Пропустити</button></div>
+</div>
 <div class="bar">
   <a class="logo" href="#story" aria-label="Iron Wave"><img src="assets/img/iron-wave-compact.svg" alt="Iron Wave"></a>
-  <nav><a href="#story" data-k="nav.overview">Огляд</a><a href="#levels" data-k="nav.levels">Сценарій</a><a href="#film" data-k="nav.film">Ролик</a></nav>
+  <nav><a href="#story" data-k="nav.overview">Огляд</a><a href="#purpose" data-k="nav.purpose">Для чого</a><a href="#how" data-k="nav.how">Як захищає</a><a href="#levels" data-k="nav.levels">Сценарій</a><a href="#film" data-k="nav.film">Ролик</a></nav>
   <a class="buy" href="#contact" data-k="nav.cta" data-track="cta-top">Зв&#39;язатися</a>
 </div>
 
@@ -55,11 +68,32 @@
 </section>
 
 
+<section id="purpose" class="sec light">
+  <div class="wrap">
+    <p class="eyebrow rv" data-k="purpose.eyebrow">Для чого</p>
+    <h2 class="h-sec rv" data-k="purpose.title">Удень — світло. За тривогою — сталь.</h2>
+    <p class="lead rv" data-k="purpose.lead">Iron Wave ставиться на вікна приміщень, де працюють люди. Звичайний день нічим не відрізняється: ламелі відкриті, у кімнаті світло. Коли оголошують тривогу, вікна закривають сталлю за кілька рухів, не виходячи на вулицю.</p>
+    <div class="pgrid"><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:1:title">Закрити вікна за тривогою</h3><p data-c="purpose:1:text">Поворот ручки — і обидві стулки закриті сталевими ламелями. Виходити назовні не потрібно.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-open.svg" alt=""><h3 data-c="purpose:2:title">Залишити світло вдень</h3><p data-c="purpose:2:text">Відкриті ламелі пропускають денне світло й зберігають огляд вулиці. Приміщення живе звичайним життям.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:3:title">Діяти за сценарієм</h3><p data-c="purpose:3:text">Зелений — працюємо. Жовтий — закриваємо. Червоний — в укриття. Відбій — відкриваємо. Одна дія на кожен рівень.</p></article></div>
+  </div>
+</section>
+
+<section id="how" class="sec how">
+  <div class="wrap">
+    <p class="eyebrow rv" data-k="how.eyebrow">Як захищає</p>
+    <h2 class="h-sec rv" data-k="how.title">Сталь між вулицею і склом.</h2>
+    <div class="how-grid">
+      <figure class="how-fig rv"><img src="assets/seq/l_0057.jpg" alt="Модуль Iron Wave: ламелі закриті" loading="lazy"><figcaption>Закрито</figcaption></figure>
+      <ol class="how-list"><li class="rv"><h3 data-c="how:4:title">Суцільне сталеве полотно</h3><p data-c="how:4:text">Закриті ламелі стають одним полотном з боку вулиці — між вулицею і склом.</p></li><li class="rv"><h3 data-c="how:5:title">Одна тяга — усі ламелі</h3><p data-c="how:5:text">Ручка зсуває одну тягу, і всі 26 ламелей повертаються разом. Жодна не лишиться відкритою окремо.</p></li><li class="rv"><h3 data-c="how:6:title">Уся конструкція — сталь</h3><p data-c="how:6:text">Рама, імпост, ламелі, тяга й ручка. Кути рами — на вус 45°.</p></li><li class="rv"><h3 data-c="how:7:title">Керування зсередини</h3><p data-c="how:7:text">Ручка — з боку приміщення. Закривати й відкривати можна, не виходячи на вулицю.</p></li></ol>
+    </div>
+    <p class="note rv" data-k="how.note">Ми не наводимо показників стійкості, доки немає протоколів випробувань саме для жалюзі.</p>
+  </div>
+</section>
+
 <section id="levels" class="sec light" style="background:var(--paper2)">
   <div class="wrap">
     <p class="eyebrow rv" data-k="levels.eyebrow">Сценарій</p>
     <h2 class="h-sec rv" data-k="levels.title">Чотири рівні. Одна ручка.</h2>
-    <div class="gal rv"><article class="card" style="--c:var(--green)"><b data-c="levels:1:name">Зелений</b><h3 data-c="levels:1:title">Працюємо</h3><p data-c="levels:1:text">Жалюзі відкриті: денне світло й огляд вулиці.</p><img src="assets/img/iron-wave-mark-open.svg" alt=""></article><article class="card" style="--c:var(--yellow)"><b data-c="levels:2:name">Жовтий</b><h3 data-c="levels:2:title">Закриваємо</h3><p data-c="levels:2:text">Ламелі закривають зсередини, не виходячи назовні.</p><img src="assets/img/iron-wave-mark-closed.svg" alt=""></article><article class="card" style="--c:var(--red)"><b data-c="levels:3:name">Червоний</b><h3 data-c="levels:3:title">В укриття</h3><p data-c="levels:3:text">Вікна закриті, люди переходять в укриття.</p><img src="assets/img/iron-wave-mark-closed.svg" alt=""></article><article class="card" style="--c:var(--steel)"><b data-c="levels:4:name">Відбій</b><h3 data-c="levels:4:title">Відкриваємо</h3><p data-c="levels:4:text">Ручку повертають назад — ламелі відкриваються.</p><img src="assets/img/iron-wave-mark-open.svg" alt=""></article></div>
+    <div class="gal rv"><article class="card" style="--c:var(--green)"><b data-c="levels:8:name">Зелений</b><h3 data-c="levels:8:title">Працюємо</h3><p data-c="levels:8:text">Жалюзі відкриті: денне світло й огляд вулиці.</p><img src="assets/img/iron-wave-mark-open.svg" alt=""></article><article class="card" style="--c:var(--yellow)"><b data-c="levels:9:name">Жовтий</b><h3 data-c="levels:9:title">Закриваємо</h3><p data-c="levels:9:text">Ламелі закривають зсередини, не виходячи назовні.</p><img src="assets/img/iron-wave-mark-closed.svg" alt=""></article><article class="card" style="--c:var(--red)"><b data-c="levels:10:name">Червоний</b><h3 data-c="levels:10:title">В укриття</h3><p data-c="levels:10:text">Вікна закриті, люди переходять в укриття.</p><img src="assets/img/iron-wave-mark-closed.svg" alt=""></article><article class="card" style="--c:var(--steel)"><b data-c="levels:11:name">Відбій</b><h3 data-c="levels:11:title">Відкриваємо</h3><p data-c="levels:11:text">Ручку повертають назад — ламелі відкриваються.</p><img src="assets/img/iron-wave-mark-open.svg" alt=""></article></div>
   </div>
 </section>
 
@@ -76,7 +110,7 @@
   <div class="wrap">
     <p class="eyebrow rv" data-k="faq.eyebrow">Питання</p>
     <h2 class="h-sec rv" data-k="faq.title">Коротко про головне.</h2>
-    <div class="faq"><details class="rv"><summary><span data-c="faq:5:q">Як закрити жалюзі?</span></summary><p data-c="faq:5:a">Зсередини приміщення, однією ручкою. Поворот ручки зсуває тягу — і всі 26 ламелей повертаються разом.</p></details><details class="rv"><summary><span data-c="faq:6:q">З чого зроблена конструкція?</span></summary><p data-c="faq:6:a">Уся конструкція — сталь: рама, імпост, ламелі, тяга й ручка.</p></details></div>
+    <div class="faq"><details class="rv"><summary><span data-c="faq:12:q">Як закрити жалюзі?</span></summary><p data-c="faq:12:a">Зсередини приміщення, однією ручкою. Поворот ручки зсуває тягу — і всі 26 ламелей повертаються разом.</p></details><details class="rv"><summary><span data-c="faq:13:q">З чого зроблена конструкція?</span></summary><p data-c="faq:13:a">Уся конструкція — сталь: рама, імпост, ламелі, тяга й ручка.</p></details></div>
   </div>
 </section>
 

@@ -123,3 +123,54 @@ body.iw-edit [data-k]:hover,body.iw-edit [data-c]:hover{outline:2px solid var(--
 body.iw-edit [contenteditable=true]{outline:2px solid var(--yellow);background:rgba(252,222,0,.08)}
 body.iw-edit .chap,body.iw-edit .lab{pointer-events:auto}
 .iw-saved{position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:99;background:var(--yellow);color:#000;font-weight:600;padding:8px 14px;font-size:13px}
+
+/* ---------- Для чого ---------- */
+.lead{font-size:clamp(18px,1.8vw,24px);line-height:1.45;color:#3c4649;max-width:46ch;margin:-24px 0 clamp(36px,5vw,64px)}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pcard{background:#fff;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:12px;min-height:280px}
+.pcard img{width:56px;height:56px;background:var(--ink);padding:8px;margin-bottom:auto}
+.pcard h3{margin:18px 0 0;font-size:clamp(22px,2.2vw,28px);letter-spacing:-.02em;line-height:1.1}
+.pcard p{margin:0;color:#4e5a5d;font-size:16px}
+@media (max-width:900px){.pgrid{grid-template-columns:minmax(0,1fr)}.pcard{min-height:0}.pcard img{margin-bottom:0}}
+
+/* ---------- Як захищає ---------- */
+.how{background:var(--ink);color:#fff}
+.how .eyebrow{color:var(--steel)}
+.how-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,4vw,56px);align-items:center}
+.how-fig{margin:0;position:relative;background:#020202;aspect-ratio:4/5;overflow:hidden}
+.how-fig img{width:100%;height:100%;object-fit:cover;object-position:50% 57%;transform:scale(1.9)}
+.how-fig figcaption{position:absolute;left:16px;bottom:14px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#e9eeee;display:flex;gap:8px;align-items:center}
+.how-fig figcaption::before{content:"";width:7px;height:7px;background:var(--yellow)}
+.how-list{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:h}
+.how-list li{border-top:1px solid var(--line);padding:22px 0 22px 52px;position:relative;counter-increment:h}
+.how-list li::before{content:counter(h,decimal-leading-zero);position:absolute;left:0;top:24px;font-size:13px;color:var(--yellow);letter-spacing:.08em;font-variant-numeric:tabular-nums}
+.how-list h3{margin:0 0 6px;font-size:clamp(20px,2vw,26px);letter-spacing:-.015em}
+.how-list p{margin:0;color:#aab4b6;font-size:16px;max-width:52ch}
+.how .note{margin-top:28px}
+@media (max-width:900px){.how-grid{grid-template-columns:minmax(0,1fr)}.how-fig{aspect-ratio:1/1}}
+
+/* ---------- Заставка: потягни ручку ---------- */
+html.intro-on,html.intro-on body{overflow:hidden;height:100%}
+.intro{position:fixed;inset:0;z-index:200;background:#020202;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#introCv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.intro-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 50% at 50% 55%,rgba(255,214,140,0) 0,rgba(0,0,0,0) 60%);opacity:0}
+.intro-ui{position:absolute;left:0;right:0;top:max(28px,env(safe-area-inset-top,0px));display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:0 16px;pointer-events:none}
+.intro-logo{width:min(300px,62vw)}
+.intro-title{margin:4px 0 0;font-size:clamp(26px,4.4vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.05}
+.lever{position:absolute;top:50%;transform:translateY(-50%);right:max(18px,calc(50% - 46vh*0.42 - 96px));width:56px;height:min(46vh,380px);cursor:grab;outline:none;touch-action:none}
+.lever:focus-visible .lever-knob{box-shadow:0 0 0 3px var(--yellow)}
+.lever-track{position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);background:linear-gradient(#3a4144,#22282a)}
+.lever-fill{position:absolute;left:50%;top:0;width:4px;transform:translateX(-50%);height:0;background:var(--yellow)}
+.lever-knob{position:absolute;left:50%;top:0;width:56px;height:76px;transform:translate(-50%,-10px);background:linear-gradient(180deg,#5b6669,#2b3234);border:1px solid #6e7a7d;display:flex;align-items:center;justify-content:center}
+.lever-knob i{width:22px;height:40px;border-left:3px solid #c9d2d4;border-right:3px solid #c9d2d4}
+.lever-knob::after{content:"";position:absolute;bottom:-6px;left:50%;width:10px;height:10px;transform:translateX(-50%) rotate(45deg);background:var(--yellow)}
+.lever.drag{cursor:grabbing}
+.intro-hint{position:absolute;left:0;right:0;bottom:calc(max(22px,env(safe-area-inset-bottom,0px)) + 56px);text-align:center;margin:0;color:#aab4b6;font-size:15px;padding:0 16px;animation:introPulse 2.4s ease-in-out infinite}
+@keyframes introPulse{50%{opacity:.45}}
+.intro-actions{position:absolute;left:0;right:0;bottom:max(18px,env(safe-area-inset-bottom,0px));display:flex;justify-content:center;gap:10px}
+.intro-actions button{font:inherit;font-size:14px;font-weight:600;border:0;padding:11px 18px;cursor:pointer}
+.intro-open{background:var(--yellow);color:#000}
+.intro-skip{background:transparent;color:#8e999c;border:1px solid var(--line)!important}
+.intro.go .intro-ui,.intro.go .lever,.intro.go .intro-hint,.intro.go .intro-actions{opacity:0;transition:opacity .3s;animation:none}
+@media (max-width:700px){.lever{right:14px;height:min(42vh,320px);width:48px}.lever-knob{width:48px;height:64px}}
+@media (prefers-reduced-motion:reduce){.intro-hint{animation:none}}
