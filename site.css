@@ -223,3 +223,17 @@ html.intro-on,html.intro-on body{overflow:hidden;height:100%}
 .fchap p{margin:8px 0 0;color:#3c4649;font-size:clamp(16px,1.5vw,20px)}
 .fnote{position:absolute;right:var(--pad);top:76px;margin:0;font-size:12px;color:#5d696c;background:rgba(255,255,255,.75);padding:4px 8px;max-width:46ch}
 @media (max-width:600px){.fnote{top:auto;bottom:8px;right:auto;left:var(--pad)}.fchap{bottom:56px}}
+/* «Ти в безпеці» — з'являється зверху, коли жалюзі закриті */
+.intro-safe{margin:0;position:absolute;left:0;right:0;top:calc(100% + 6px);text-align:center;font-size:clamp(34px,6vw,76px);font-weight:700;letter-spacing:-.025em;line-height:1;opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+.intro-safe{background:linear-gradient(180deg,#e7ecec 0%,#a9b4b6 55%,#FCDE00 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro.safe .intro-safe{opacity:1;transform:none}
+.intro-title{transition:opacity .35s}
+.intro.safe .intro-hint{opacity:0}
+.intro.is3d .intro-ui{position:absolute}
+@media (prefers-reduced-motion:reduce){.intro-safe{transition:opacity .3s;transform:none}}
+.f3d-fail #facade,.f3d-fail .fchap{opacity:1!important}
+#facade.f3d-fail{height:auto}#facade.f3d-fail .fpin{position:relative;height:auto;padding:120px var(--pad) 60px;display:grid;gap:14px}#facade.f3d-fail .fchap{position:relative;left:auto;right:auto;bottom:auto}
+/* «Ти в безпеці» замінює заголовок на тому ж місці */
+.intro.is3d .intro-ui{display:grid;justify-items:center;grid-template-columns:1fr}
+.intro.is3d .intro-ui .intro-logo{grid-row:1}
+.intro.is3d .intro-title,.intro.is3d .intro-safe{grid-row:2;grid-column:1;position:static;align-self:center}
