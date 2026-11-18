@@ -79,6 +79,16 @@ function intro2d() {
   s.onerror = () => { if (!window.IW_introMode) intro2d(); }; document.head.append(s);
 })();
 
+/* ---------- блок «Покрутіть модуль»: 3D підвантажується, коли блок поруч ---------- */
+(function lazyViewer() {
+  const v = document.getElementById('viewer3d'); if (!v) return;
+  let gl = false; try { const c = document.createElement('canvas'); gl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch {}
+  if (!gl) { v.classList.add('v3d-fail'); return; }
+  const io = new IntersectionObserver(es => { if (!es[0].isIntersecting) return; io.disconnect();
+    const s = document.createElement('script'); s.type = 'module'; s.src = 'viewer3d.js'; s.onerror = () => v.classList.add('v3d-fail'); document.head.append(s); }, { rootMargin: '800px 0px' });
+  io.observe(v);
+})();
+
 /* ---------- історія: кадри за прогресом гортання ---------- */
 const N = 161, SRC = i => `assets/seq/l_${String(i).padStart(4, '0')}.jpg`;
 const story = $('#story'), cv = $('#seq'), cx = cv.getContext('2d');
