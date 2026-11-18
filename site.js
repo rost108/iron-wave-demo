@@ -79,6 +79,27 @@ function intro2d() {
   s.onerror = () => { if (!window.IW_introMode) intro2d(); }; document.head.append(s);
 })();
 
+/* ---------- блок «Зовні»: кадри фасаду за гортанням (ролети закриваються) ---------- */
+(function facade() {
+  const sec = document.getElementById('facade'); if (!sec) return;
+  const cv = $('#facadeCv'), cx = cv.getContext('2d'), chaps = [...sec.querySelectorAll('.fchap')];
+  const N = 63, SRC = i => `assets/facade/f_${String(i).padStart(3, '0')}.jpg`, imgs = [];
+  let started = false, cur = -1, W = 0, H = 0, dpr = 1;
+  const io = new IntersectionObserver(es => { if (!es[0].isIntersecting || started) return; started = true;
+    let q = 0; (function bg() { for (let k = 0; k < 6 && q < N; k++) { const i = q++, im = new Image(); im.decoding = 'async'; im.src = SRC(i); im.onload = () => { cur = -1; draw(); }; imgs[i] = im; } if (q < N) setTimeout(bg, 50); })();
+  }, { rootMargin: '900px 0px' }); io.observe(sec);
+  const prog = () => { const r = sec.getBoundingClientRect(); return Math.min(1, Math.max(0, -r.top / (sec.offsetHeight - innerHeight))); };
+  function size() { dpr = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; cur = -1; draw(); }
+  function draw() {
+    if (!W) return; const p = prog(), want = Math.round(Math.min(1, Math.max(0, (p - .12) / .7)) * (N - 1));
+    let j = -1; for (let d = 0; d < N && j < 0; d++) for (const t of [want - d, want + d]) if (t >= 0 && t < N && imgs[t] && imgs[t].complete && imgs[t].naturalWidth) { j = t; break; }
+    if (j >= 0 && j !== cur) { const im = imgs[j], iw = im.naturalWidth, ih = im.naturalHeight, s = W / H < 1.1 ? Math.max(W / iw * 1.25, H * .5 / ih) : Math.max(W / iw, H / ih); cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.fillStyle = '#dcdcd9'; cx.fillRect(0, 0, W, H); cx.drawImage(im, (W - iw * s) / 2, (H - ih * s) * .42, iw * s, ih * s); cur = j; }
+    chaps.forEach(el => { const a = +el.dataset.in, b = +el.dataset.out, f = .05, v = a === 0 && p < b - f ? 1 : Math.max(0, Math.min(1, (p - a) / f, (b - p) / f)); el.style.opacity = v; el.style.transform = `translateY(${(1 - v) * 14}px)`; });
+  }
+  addEventListener('scroll', () => requestAnimationFrame(draw), { passive: true });
+  new ResizeObserver(size).observe(cv);
+})();
+
 /* ---------- блок «Покрутіть модуль»: 3D підвантажується, коли блок поруч ---------- */
 (function lazyViewer() {
   const v = document.getElementById('viewer3d'); if (!v) return;

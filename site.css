@@ -212,3 +212,14 @@ html.intro-on,html.intro-on body{overflow:hidden;height:100%}
 .v3d-views button[aria-pressed=true]{background:#0b0c0d;color:#fff}
 .v3d-fail .v3d-controls{display:none}
 .lever-tag.left::before{left:auto;right:-7px;border-right:0;border-left:7px solid var(--yellow)}
+
+/* Зовні: фасад з ролетами за гортанням */
+#facade{position:relative;height:300vh;background:#e9e9e6}
+#facade .fpin{position:sticky;top:0;height:100vh;overflow:hidden}
+#facadeCv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.feyebrow{position:absolute;left:var(--pad);top:72px;margin:0;font-size:clamp(15px,1.4vw,19px);font-weight:600;color:#3c4649;background:rgba(255,255,255,.75);padding:4px 10px}
+.fchap{position:absolute;left:var(--pad);right:var(--pad);bottom:clamp(28px,8vh,72px);max-width:720px;padding:18px 22px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#111;opacity:0}
+.fchap h2{margin:0;font-size:clamp(28px,4vw,52px);letter-spacing:-.02em;line-height:1.05}
+.fchap p{margin:8px 0 0;color:#3c4649;font-size:clamp(16px,1.5vw,20px)}
+.fnote{position:absolute;right:var(--pad);top:76px;margin:0;font-size:12px;color:#5d696c;background:rgba(255,255,255,.75);padding:4px 8px;max-width:46ch}
+@media (max-width:600px){.fnote{top:auto;bottom:8px;right:auto;left:var(--pad)}.fchap{bottom:56px}}
