@@ -8,8 +8,8 @@ const store = { get(k) { try { return localStorage.getItem(k); } catch { return 
 
 
 /* ---------- заставка: тягнеш ручку → ламелі відкриваються → проліт крізь щілину в сайт ---------- */
-(function intro() {
-  const box = $('#intro'); if (!box || IW.edit) return;
+function intro2d() {
+  const box = $('#intro'); if (!box || IW.edit || window.IW_introMode) return; window.IW_introMode = '2d'; box.classList.remove('is3d', 'loading');
   let seen = null; try { seen = sessionStorage.getItem('iw_intro'); } catch {}
   if (seen && !/[?&]intro\b/.test(location.search)) return;
   box.hidden = false; document.documentElement.classList.add('intro-on');
@@ -63,6 +63,20 @@ const store = { get(k) { try { return localStorage.getItem(k); } catch { return 
   $('.intro-skip', box).onclick = () => { done = true; finish(); };
   addEventListener('resize', () => { if (!box.hidden) { size(); setP(p); } });
   size(); setP(0); lever.focus({ preventScroll: true });
+}
+/* Вибір заставки: справжнє 3D (intro3d.js, three.js) або запасна кадрова (intro2d). */
+(function pickIntro() {
+  const box = $('#intro'); if (!box || IW.edit) return;
+  let seen = null; try { seen = sessionStorage.getItem('iw_intro'); } catch {}
+  if (seen && !/[?&]intro\b/.test(location.search)) return;
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let gl = false; try { const c = document.createElement('canvas'); gl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch {}
+  if (!gl || RM || /[?&]intro2d\b/.test(location.search)) return intro2d();
+  box.hidden = false; box.classList.add('is3d', 'loading'); document.documentElement.classList.add('intro-on');
+  window.IW_intro2d = intro2d;
+  setTimeout(() => { if (!window.IW_introMode) intro2d(); }, 7000);        // повільний інтернет — не тримати людину
+  const s = document.createElement('script'); s.type = 'module'; s.src = 'intro3d.js';
+  s.onerror = () => { if (!window.IW_introMode) intro2d(); }; document.head.append(s);
 })();
 
 /* ---------- історія: кадри за прогресом гортання ---------- */

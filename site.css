@@ -176,3 +176,20 @@ html.intro-on,html.intro-on body{overflow:hidden;height:100%}
 .intro.go .intro-ui,.intro.go .lever,.intro.go .intro-hint,.intro.go .intro-actions{opacity:0;transition:opacity .3s;animation:none}
 @media (max-width:700px){.lever{right:14px;height:min(42vh,320px);width:48px}.lever-knob{width:48px;height:64px}}
 @media (prefers-reduced-motion:reduce){.intro-hint{animation:none}}
+
+/* 3D-заставка (intro3d.js) */
+#intro3d{position:absolute;inset:0;width:100%;height:100%;display:block;outline:none;touch-action:none}
+#intro3d.drag{cursor:grabbing!important}
+.intro.is3d #introCv,.intro.is3d .lever{display:none}
+.intro.is3d .intro-hint{bottom:calc(max(22px,env(safe-area-inset-bottom,0px)) + 64px);transition:opacity .3s}
+.intro.loading::after{content:"";position:absolute;left:50%;top:55%;width:42px;height:42px;margin:-21px 0 0 -21px;border:3px solid #2a2e30;border-top-color:var(--yellow);animation:introSpin .9s linear infinite}
+@keyframes introSpin{to{transform:rotate(360deg)}}
+.intro-fade{position:absolute;inset:0;background:#f7f3ea;opacity:0;pointer-events:none}
+.intro.is3d .intro-ui{text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.lever-tag{position:absolute;left:0;top:0;pointer-events:none;font-size:13px;font-weight:600;letter-spacing:.06em;color:#0b0c0d;background:var(--yellow);padding:6px 10px;transition:opacity .25s;white-space:nowrap}
+.lever-tag::before{content:"";position:absolute;left:-7px;top:50%;width:0;height:0;border:7px solid transparent;border-right-color:var(--yellow);border-left:0;transform:translateY(-50%)}
+.intro.is3d::before{content:"";position:absolute;left:0;right:0;top:0;height:min(260px,34vh);background:linear-gradient(rgba(5,6,7,.78),rgba(5,6,7,0));pointer-events:none;z-index:1}
+.intro.is3d:not(.loading)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:180px;background:linear-gradient(rgba(5,6,7,0),rgba(5,6,7,.7));pointer-events:none;z-index:1}
+.intro.is3d .intro-ui,.intro.is3d .intro-hint,.intro.is3d .intro-actions,.intro.is3d .lever-tag{z-index:2}
+.intro-fade{z-index:3}
+.intro.is3d.go::before,.intro.is3d.go::after{opacity:0;transition:opacity .4s}
