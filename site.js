@@ -23,7 +23,7 @@ function intro2d() {
   function size() { dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; draw(); }
   function draw() {
     if (!W) return;
-    const f = Math.round(CLOSED - p * (CLOSED - OPEN)); let im = frames[f];
+    const f = Math.round(OPEN + p * (CLOSED - OPEN)); let im = frames[f];               // ручка вниз → ламелі закриваються
     for (let d = 1; !(im && im.complete && im.naturalWidth) && d < 22; d++) im = frames[f + d] || frames[f - d];
     cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.fillStyle = '#020202'; cx.fillRect(0, 0, W, H);
     if (!(im && im.complete && im.naturalWidth)) return;
@@ -44,10 +44,18 @@ function intro2d() {
     box.style.transition = 'opacity .45s ease'; box.style.opacity = '0';
     setTimeout(() => { box.hidden = true; document.documentElement.classList.remove('intro-on'); try { sessionStorage.setItem('iw_intro', '1'); } catch {} dispatchEvent(new Event('resize')); }, 460);
   }
+  // жалюзі закрились → «Ти в безпеці.» на місці заголовка → проліт у сайт
   function go() {
-    if (done) return; done = true; box.classList.add('go');
-    if (RM) return finish();
-    tween(0, 1, 1500, v => { z = v; draw(); }, finish);
+    if (done) return; done = true;
+    try { navigator.vibrate && navigator.vibrate(18); } catch {}
+    box.classList.add('safe'); const t = $('.intro-title', box); if (t) t.style.opacity = 0;
+    const ob = $('.intro-open', box); if (ob) { ob.textContent = ob.dataset.enter || 'Увійти'; ob.onclick = fly; }
+    setTimeout(fly, RM ? 1200 : 2200);
+  }
+  let flying = false;
+  function fly() {
+    if (flying) return; flying = true; box.classList.add('go');
+    finish();
   }
   // ручка: тягнути вниз (миша, палець), клавіші, колесо
   let drag = null;
@@ -59,19 +67,19 @@ function intro2d() {
   box.addEventListener('wheel', e => { if (!done) { setP(p + e.deltaY / 900); e.preventDefault(); } }, { passive: false });
   let ty = null; box.addEventListener('touchstart', e => { if (!e.target.closest('.lever,button')) ty = e.touches[0].clientY; }, { passive: true });
   box.addEventListener('touchmove', e => { if (ty != null && !done) { setP(p + (ty - e.touches[0].clientY) / 500); ty = e.touches[0].clientY; } }, { passive: true });
-  $('.intro-open', box).onclick = () => tween(p, 1, 900, setP);
+  $('.intro-open', box).onclick = () => { if (!done) tween(p, 1, 900, setP); };
   $('.intro-skip', box).onclick = () => { done = true; finish(); };
   addEventListener('resize', () => { if (!box.hidden) { size(); setP(p); } });
   size(); setP(0); lever.focus({ preventScroll: true });
 }
-/* Вибір заставки: справжнє 3D (intro3d.js, three.js) або запасна кадрова (intro2d). */
+/* Вибір заставки: за замовчуванням — рендер-кадри з окремою ручкою (intro2d); 3D-версія — лише з ?intro3d. */
 (function pickIntro() {
   const box = $('#intro'); if (!box || IW.edit) return;
   let seen = null; try { seen = sessionStorage.getItem('iw_intro'); } catch {}
   if (seen && !/[?&]intro\b/.test(location.search)) return;
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let gl = false; try { const c = document.createElement('canvas'); gl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch {}
-  if (!gl || RM || /[?&]intro2d\b/.test(location.search)) return intro2d();
+  if (!gl || RM || !/[?&]intro3d\b/.test(location.search)) return intro2d();
   box.hidden = false; box.classList.add('is3d', 'loading'); document.documentElement.classList.add('intro-on');
   window.IW_intro2d = intro2d;
   setTimeout(() => { if (!window.IW_introMode) intro2d(); }, 7000);        // повільний інтернет — не тримати людину

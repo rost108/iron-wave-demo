@@ -234,6 +234,7 @@ html.intro-on,html.intro-on body{overflow:hidden;height:100%}
 .f3d-fail #facade,.f3d-fail .fchap{opacity:1!important}
 #facade.f3d-fail{height:auto}#facade.f3d-fail .fpin{position:relative;height:auto;padding:120px var(--pad) 60px;display:grid;gap:14px}#facade.f3d-fail .fchap{position:relative;left:auto;right:auto;bottom:auto}
 /* «Ти в безпеці» замінює заголовок на тому ж місці */
-.intro.is3d .intro-ui{display:grid;justify-items:center;grid-template-columns:1fr}
-.intro.is3d .intro-ui .intro-logo{grid-row:1}
-.intro.is3d .intro-title,.intro.is3d .intro-safe{grid-row:2;grid-column:1;position:static;align-self:center}
+.intro .intro-ui{display:grid;justify-items:center;grid-template-columns:1fr}
+.intro .intro-ui .intro-logo{grid-row:1}
+.intro .intro-title,.intro .intro-safe{grid-row:2;grid-column:1;position:static;align-self:center}
+.intro.safe .lever{opacity:.35;transition:opacity .4s}
