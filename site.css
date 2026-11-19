@@ -238,3 +238,7 @@ html.intro-on,html.intro-on body{overflow:hidden;height:100%}
 .intro .intro-ui .intro-logo{grid-row:1}
 .intro .intro-title,.intro .intro-safe{grid-row:2;grid-column:1;position:static;align-self:center}
 .intro.safe .lever{opacity:.35;transition:opacity .4s}
+
+/* 3D-ручка праворуч на вході (lever3d.js) */
+.lever .lever3d{position:absolute;pointer-events:none;display:block}
+.lever.is3d .lever-track,.lever.is3d .lever-fill,.lever.is3d .lever-knob{opacity:0}

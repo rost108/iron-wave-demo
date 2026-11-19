@@ -36,7 +36,7 @@ function intro2d() {
   function setP(v) {
     p = Math.max(0, Math.min(1, v)); const h = lever.clientHeight;
     knob.style.top = (p * (h - 60)) + 'px'; fill.style.height = (p * (h - 60)) + 'px';
-    lever.setAttribute('aria-valuenow', Math.round(p * 100)); draw();
+    lever.setAttribute('aria-valuenow', Math.round(p * 100)); draw(); window.IW_lever3d && window.IW_lever3d(p);
     if (p >= 1 && !done) go();
   }
   function tween(from, to, ms, fn, then) { const t0 = performance.now(); (function st(t) { const k = Math.min(1, (t - t0) / ms); fn(from + (to - from) * ease(k)); if (k < 1) requestAnimationFrame(st); else then && then(); })(t0); }
@@ -71,6 +71,8 @@ function intro2d() {
   $('.intro-skip', box).onclick = () => { done = true; finish(); };
   addEventListener('resize', () => { if (!box.hidden) { size(); setP(p); } });
   size(); setP(0); lever.focus({ preventScroll: true });
+  // об'ємна ручка (three.js); якщо не завантажиться — лишається пласка
+  try { const c = document.createElement('canvas'); if (c.getContext('webgl2') || c.getContext('webgl')) { const sc = document.createElement('script'); sc.type = 'module'; sc.src = 'lever3d.js'; document.head.append(sc); } } catch {}
 }
 /* Вибір заставки: за замовчуванням — рендер-кадри з окремою ручкою (intro2d); 3D-версія — лише з ?intro3d. */
 (function pickIntro() {
