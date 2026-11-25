@@ -14,7 +14,7 @@
 <link rel="icon" href="assets/img/iron-wave-mark-closed.svg" type="image/svg+xml">
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","name":"Hobbit House"},{"@context":"https://schema.org","@type":"Product","name":"Iron Wave","description":"Iron Wave — сталеві ламельні жалюзі. Закриваються зсередини однією ручкою: одна тяга повертає всі ламелі разом. Hobbit House.","brand":{"@type":"Brand","name":"Hobbit House"}},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Як закрити жалюзі?","acceptedAnswer":{"@type":"Answer","text":"Зсередини приміщення, однією ручкою. Поворот ручки зсуває тягу — і всі 26 ламелей повертаються разом."}},{"@type":"Question","name":"З чого зроблена конструкція?","acceptedAnswer":{"@type":"Answer","text":"Уся конструкція — сталь: рама, імпост, ламелі, тяга й ручка."}}]}]</script>
 <style>
-@font-face{font-family:"Akt";src:url("assets/fonts/Akt.ttf") format("truetype");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Akt";src:url("assets/fonts/Akt.woff2") format("woff2"),url("assets/fonts/Akt.ttf") format("truetype");font-weight:100 900;font-display:swap}
 :root{
   --black:#000000;--ink:#0b0c0d;--ink2:#161819;--line:#2a2e30;
   --steel:#84969A;--steel-l:#C9D2D4;--paper:#f5f5f2;--paper2:#ebeae5;
@@ -24,6 +24,7 @@
 </style>
 <link rel="stylesheet" href="site.css">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<link rel="preload" href="assets/fonts/Akt.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 
 </head>
@@ -45,14 +46,14 @@
 </div>
 <div class="bar">
   <a class="logo" href="#story" aria-label="Iron Wave"><img src="assets/img/iron-wave-compact.svg" alt="Iron Wave"></a>
-  <nav><a href="#story" data-k="nav.overview">Огляд</a><a href="#purpose" data-k="nav.purpose">Для чого</a><a href="#how" data-k="nav.how">Як захищає</a><a href="#facade" data-k="nav.facade">Зовні</a><a href="#viewer3d" data-k="nav.v3d">3D</a><a href="#levels" data-k="nav.levels">Сценарій</a><a href="#film" data-k="nav.film">Ролик</a></nav>
-  <a class="buy" href="#contact" data-k="nav.cta" data-track="cta-top">Зв&#39;язатися</a>
+  <nav><a href="#story" data-k="nav.overview">Огляд</a><a href="#purpose" data-k="nav.purpose">Для чого</a><a href="#how" data-k="nav.how">Як влаштовано</a><a href="#facade" data-k="nav.facade">Зовні</a><a href="#viewer3d" data-k="nav.v3d">3D</a><a href="#levels" data-k="nav.levels">Сценарій</a><a href="#film" data-k="nav.film">Ролик</a></nav>
+  <a class="buy" href="#contact" data-k="nav.cta" data-track="cta-top">Дізнатися про запуск</a>
 </div>
 
 <section id="story" aria-label="Iron Wave — огляд">
   <div class="pin">
     <canvas id="seq" aria-label="Модуль Iron Wave: закривання, механізм і деталі"></canvas>
-    <div class="chap" data-in="0" data-out=".1"><img class="wm" src="assets/img/iron-wave-lockup-clear.svg" alt="Iron Wave — Сталеві ламельні жалюзі, Hobbit House" style="width:min(460px,78vw)"></div>
+    <div class="chap" data-in="0" data-out=".1"><img class="wm" src="assets/img/iron-wave-lockup-clear.svg" alt="Iron Wave — Сталеві ламельні жалюзі, Hobbit House" style="width:min(460px,78vw)"><p data-k="story.ch0">Сталеві жалюзі для офісів, дата-центрів і магазинів. Закриваються зсередини однією ручкою.</p><p class="note" data-k="story.ch0note">Наша мета — захищений простір і робота без зупинки. Готуємо запуск разом із протоколом випробувань.</p></div>
     <div class="chap" data-in=".13" data-out=".24"><h2 data-k="story.ch1">Відкриті — світло.</h2></div>
     <div class="chap" data-in=".27" data-out=".38"><h2 class="grad" data-k="story.ch2">Закриті — сталь.</h2></div>
     <div class="chap bottom" data-in=".42" data-out=".6"><h2 data-k="story.ch3">Одна ручка.<br>Одна тяга.</h2><p data-k="story.ch3p">Поворот ручки зсуває тягу — і всі 26 ламелей повертаються разом.</p></div>
@@ -75,16 +76,16 @@
   <div class="wrap">
     <p class="eyebrow rv" data-k="purpose.eyebrow">Для чого</p>
     <h2 class="h-sec rv" data-k="purpose.title">Вікно — вразливе місце приміщення.</h2>
-    <p class="lead rv" data-k="purpose.lead">Під час обстрілу значна частина поранень у будівлях — від уламків скла. Iron Wave ставить сталевий лист між вулицею і склом. Удень ламелі відкриті й пропускають світло, за тривогою їх закривають зсередини однією ручкою.</p>
+    <p class="lead rv" data-k="purpose.lead">Вікна є в кожному офісі, дата-центрі й магазині, і скло там поруч із людьми та обладнанням. Iron Wave закриває вікно сталевими ламелями з боку вулиці: удень ламелі відкриті, за тривогою їх повертають зсередини однією ручкою.</p>
     <h3 class="psub rv" data-k="purpose.sub">Удень — світло. За тривогою — сталь.</h3>
-    <div class="pgrid"><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:1:title">Закрити вікна за тривогою</h3><p data-c="purpose:1:text">Поворот ручки — і обидві стулки закриті сталевими ламелями. Виходити назовні не потрібно.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:2:title">Захист персоналу від осколків скла</h3><p data-c="purpose:2:text">Iron Wave створені, щоб закрити скло сталлю з боку вулиці: осколки розбитого скла не повинні летіти на людей у приміщенні.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:3:title">Діяти за сценарієм</h3><p data-c="purpose:3:text">Зелений — працюємо. Жовтий — закриваємо. Червоний — в укриття. Відбій — відкриваємо. Одна дія на кожен рівень.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-open.svg" alt=""><h3 data-c="purpose:4:title">Щоб робота не зупинялась</h3><p data-c="purpose:4:text">Офіси, дата-центри, магазини — там, де вікно не закладеш, а скло поруч із людьми й обладнанням.</p></article></div>
+    <div class="pgrid"><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:1:title">Закрити вікна за тривогою</h3><p data-c="purpose:1:text">Поворот ручки — і обидві стулки закриті сталевими ламелями. Виходити назовні не потрібно.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:2:title">Сталь перед склом</h3><p data-c="purpose:2:text">Iron Wave створені, щоб закрити скло сталлю з боку вулиці: осколки розбитого скла не повинні летіти на людей у приміщенні.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-closed.svg" alt=""><h3 data-c="purpose:3:title">Діяти за сценарієм</h3><p data-c="purpose:3:text">Зелений — працюємо. Жовтий — закриваємо. Червоний — в укриття. Відбій — відкриваємо. Одна дія на кожен рівень.</p></article><article class="pcard rv"><img src="assets/img/iron-wave-mark-open.svg" alt=""><h3 data-c="purpose:4:title">Щоб робота не зупинялась</h3><p data-c="purpose:4:text">Офіси, дата-центри, магазини — там, де вікно не закладеш, а скло поруч із людьми й обладнанням.</p></article></div>
     <p class="honest rv" data-k="purpose.honest">Жалюзі не замінюють укриття. На червоному рівні люди переходять в укриття.</p>
   </div>
 </section>
 
 <section id="how" class="sec how">
   <div class="wrap">
-    <p class="eyebrow rv" data-k="how.eyebrow">Як захищає</p>
+    <p class="eyebrow rv" data-k="how.eyebrow">Як влаштовано</p>
     <h2 class="h-sec rv" data-k="how.title">Сталь між вулицею і склом.</h2>
     <div class="how-grid">
       <figure class="how-fig rv"><img src="assets/seq/l_0057.jpg" alt="Модуль Iron Wave: ламелі закриті" loading="lazy"><figcaption>Закрито</figcaption></figure>
@@ -144,15 +145,16 @@
 <section id="contact" class="end">
   <div class="wrap">
     <p class="mantra rv"><span data-k="end.mantra1">Ваша безпека —</span><br><span class="grad" data-k="end.mantra2">це наша робота.</span></p>
-    <p class="rv" data-k="end.lead">Розкажіть, які вікна потрібно закрити.</p>
+    <p class="rv" data-k="end.lead">Iron Wave вийде разом із протоколом випробувань. Залиште контакт — повідомимо першими.</p>
     <form class="lead rv" id="leadForm" autocomplete="on">
-      <input name="name" placeholder="Ім&#39;я" maxlength="80">
-      <input name="phone" placeholder="Телефон" required inputmode="tel" maxlength="30">
-      <textarea name="message" placeholder="Які вікна і скільки" rows="2" maxlength="1000"></textarea>
+      <div class="two"><input name="company" placeholder="Компанія" maxlength="120" autocomplete="organization"><input name="name" placeholder="Ім&#39;я" maxlength="80" autocomplete="name"></div>
+      <div class="two"><input name="phone" placeholder="Телефон" inputmode="tel" maxlength="30" autocomplete="tel"><input name="email" type="email" placeholder="E-mail" maxlength="120" autocomplete="email"></div>
+      <div class="two"><select name="segment" aria-label="Тип приміщення"><option value="">Тип приміщення</option><option>Офіс</option><option>Дата-центр</option><option>Магазин</option><option>Інше</option></select><input name="windows" placeholder="Скільки вікон, приблизно" inputmode="numeric" maxlength="6"></div>
+      <textarea name="message" placeholder="Коментар — за бажанням" rows="2" maxlength="1000"></textarea>
       <input name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
-      <button type="submit" data-k="form.send">Надіслати</button>
+      <button type="submit" data-k="form.send">Повідомити мене про запуск</button>
       <small data-k="form.consent">Надсилаючи форму, ви погоджуєтесь на обробку контактних даних для відповіді на звернення.</small>
-      <p class="ok" hidden data-k="form.ok">Дякуємо. Менеджер зв&#39;яжеться з вами.</p>
+      <p class="ok" hidden data-k="form.ok">Дякуємо. Напишемо, щойно Iron Wave буде готовий до замовлення.</p>
     </form>
     <a class="link" href="#story" data-k="end.again">Ще раз огляд ›</a>
     
@@ -161,7 +163,7 @@
 
 <footer><div class="wrap"><img src="assets/img/hobbit-house-on-dark.svg" alt="Hobbit House"><small data-k="footer.copy">Iron Wave — сталеві ламельні жалюзі · © 2026 Hobbit House</small></div></footer>
 
-<script>window.IW={"edit": false, "widgets": {"chat_on": true, "chat_title": "Iron Wave", "chat_greeting": "Вітаємо! Розкажіть, які вікна потрібно закрити, — підкажемо.", "callback_on": true, "cookie_on": true, "exit_on": false, "exit_text": "Залиште телефон — менеджер передзвонить і відповість на питання."}, "t": {"form.name": "Ім'я", "form.phone": "Телефон", "form.msg": "Які вікна і скільки", "form.send": "Надіслати", "form.ok": "Дякуємо. Менеджер зв'яжеться з вами.", "form.consent": "Надсилаючи форму, ви погоджуєтесь на обробку контактних даних для відповіді на звернення.", "w.callback": "Передзвоніть мені", "w.cookie": "Ми рахуємо відвідування власним лічильником, щоб покращувати сайт.", "w.cookie_ok": "Добре", "w.chat_ph": "Напишіть повідомлення"}, "demo": true};</script>
+<script>window.IW={"edit": false, "live": false, "widgets": {"chat_on": true, "chat_title": "Iron Wave", "chat_greeting": "Вітаємо! Iron Wave готується до запуску. Запитайте, як він працює, або залиште контакт — повідомимо про старт.", "callback_on": true, "cookie_on": true, "exit_on": false, "exit_text": "Залиште телефон — менеджер передзвонить і відповість на питання."}, "t": {"form.name": "Ім'я", "form.phone": "Телефон", "form.company": "Компанія", "form.email": "E-mail", "form.segment": "Тип приміщення", "form.segments": "Офіс|Дата-центр|Магазин|Інше", "form.windows": "Скільки вікон, приблизно", "form.contact_err": "Вкажіть телефон або e-mail.", "form.msg": "Коментар — за бажанням", "form.send": "Повідомити мене про запуск", "form.ok": "Дякуємо. Напишемо, щойно Iron Wave буде готовий до замовлення.", "form.consent": "Надсилаючи форму, ви погоджуєтесь на обробку контактних даних для відповіді на звернення.", "w.callback": "Передзвоніть мені", "w.cookie": "Ми рахуємо відвідування власним лічильником, щоб покращувати сайт.", "w.cookie_ok": "Добре", "w.chat_ph": "Напишіть повідомлення"}, "demo": true};</script>
 <script src="site.js" defer></script>
 </body>
 </html>

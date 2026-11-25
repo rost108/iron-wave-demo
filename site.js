@@ -110,13 +110,24 @@ function intro2d() {
 })();
 
 /* ---------- історія: кадри за прогресом гортання ---------- */
-const N = 161, SRC = i => `assets/seq/l_${String(i).padStart(4, '0')}.jpg`;
+// телефон/вузький екран (≤ 1100 фізичних px ширини) → кадри 960 px (~⅓ ваги); підписи в annot.json відносні (0–1), тож не зсуваються
+const SMALL = Math.min(innerWidth, screen.width || innerWidth) * Math.min(2, devicePixelRatio || 1) <= 1100;
+const N = 161, SRC = i => `assets/${SMALL ? 'seq960' : 'seq'}/l_${String(i).padStart(4, '0')}.jpg`;
 const story = $('#story'), cv = $('#seq'), cx = cv.getContext('2d');
 const chaps = [...document.querySelectorAll('.chap')], labs = [...document.querySelectorAll('.lab')], cue = $('#cue');
 const imgs = new Array(N); let annot = {}, cur = -1, dpr = 1, CW = 0, CH = 0, want = 0, geo = { s: 1, ox: 0, oy: 0, iw: 1600, ih: 900 };
 fetch('assets/seq/annot.json').then(r => r.json()).then(j => { annot = j; cur = -1; tick(); }).catch(() => {});
 function load(i) { if (imgs[i]) return imgs[i]; const im = new Image(); im.decoding = 'async'; im.src = SRC(i); im.onload = () => { if (Math.abs(i - want) < 2) { cur = -1; tick(); } }; return imgs[i] = im; }
-[0, 40, 80, 120, 160].forEach(load); let q = 0; (function bg() { for (let k = 0; k < 6 && q < N; k++) load(q++); if (q < N) setTimeout(bg, 60); })();
+// кадри історії: одразу лише перший; 5 опорних і решта фоном — коли вступ закрито і до історії ≤ 1,5 екрана
+// (раніше всі 161 кадр качались з першої секунди разом зі вступом — 5,7 МБ, що конкурували з першим екраном)
+load(0);
+let q = 0, bgOn = false;
+function bg() { for (let k = 0; k < 6 && q < N; k++) load(q++); if (q < N) setTimeout(bg, 60); }
+function startStory() { if (bgOn) return; bgOn = true; [40, 80, 120, 160].forEach(load); bg(); }
+const introOn = () => document.documentElement.classList.contains('intro-on');
+let storyNear = false;
+new IntersectionObserver(es => { storyNear = es[0].isIntersecting; if (storyNear && !introOn()) startStory(); }, { rootMargin: '150% 0px' }).observe(story);
+new MutationObserver(() => { if (storyNear && !introOn()) startStory(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 const progress = () => { const r = story.getBoundingClientRect(); return Math.min(1, Math.max(0, -r.top / (story.offsetHeight - innerHeight))); };
 function vis(el, p) { const a = +el.dataset.in, b = +el.dataset.out, f = .03; if (a === 0 && p < b - f) return 1; return Math.max(0, Math.min(1, (p - a) / f, (b - p) / f)); }
 function resize() { dpr = Math.min(2, devicePixelRatio || 1); CW = cv.clientWidth; CH = cv.clientHeight; cv.width = CW * dpr; cv.height = CH * dpr; cur = -1; tick(); }
@@ -150,7 +161,14 @@ if (IW.demo) return demoMode();
 /* ---------- аналітика (Аналітика / Огляд у панелі) ---------- */
 const consent = () => !W.cookie_on || store.get('iw_consent') === '1';
 function vid() { if (!consent()) return ''; let v = store.get('iw_vid'); if (!v) { v = Math.random().toString(36).slice(2) + Date.now().toString(36); store.set('iw_vid', v); } return v; }
-const utm = location.search.includes('utm_') ? location.search.slice(1) : '';
+// мітки реклами: зберігаємо з першої сторінки візиту, щоб вони дійшли до заявки навіть після переходів
+const utm = (() => {
+  const q = new URLSearchParams(location.search), keep = new URLSearchParams();
+  for (const [k, v] of q) if (/^(utm_\w+|gclid|gbraid|wbraid|fbclid)$/.test(k)) keep.set(k, v.slice(0, 200));
+  let s = keep.toString();
+  try { if (s) sessionStorage.setItem('iw_utm', s); else s = sessionStorage.getItem('iw_utm') || ''; } catch {}
+  return s;
+})();
 const beacon = (u, d) => { try { navigator.sendBeacon(u, new Blob([JSON.stringify(d)], { type: 'application/json' })); } catch {} };
 beacon('/api/pv', { path: location.pathname, ref: document.referrer, utm, vid: vid(), w: innerWidth });
 document.addEventListener('click', e => { const t = e.target.closest('[data-track]'); if (t) beacon('/api/click', { kind: t.dataset.track, path: location.pathname }); });
@@ -161,7 +179,8 @@ form?.addEventListener('submit', async e => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(form)); d.page = location.pathname; d.utm = utm; d.source = 'form';
   const btn = form.querySelector('button'); btn.disabled = true;
-  try { const r = await post('/api/lead', d); if (r.ok) { form.querySelectorAll('input,textarea,button').forEach(x => x.hidden = true); $('.ok', form).hidden = false; } else { alert(r.error || 'Помилка'); btn.disabled = false; } }
+  if (!d.phone.trim() && !d.email.trim()) { alert(T['form.contact_err'] || 'Вкажіть телефон або e-mail.'); btn.disabled = false; form.phone.focus(); return; }
+  try { const r = await post('/api/lead', d); if (r.ok) { form.querySelectorAll('input,textarea,button,select,.two').forEach(x => x.hidden = true); $('.ok', form).hidden = false; } else { alert(r.error || 'Помилка'); btn.disabled = false; } }
   catch { alert('Мережа недоступна. Спробуйте ще раз.'); btn.disabled = false; }
 });
 
